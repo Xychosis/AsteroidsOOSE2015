@@ -12,12 +12,12 @@ public class AsteroidPlayer {
 	boolean turningLeft, turningRight, accelerating, active;
 	int[] xPts, yPts; //store the current locations of the points used to draw the Player
 					
-	int shotDelay, shotDelayLeft; //used to determine the rate of firing
+	int BulletDelay, BulletDelayLeft; //used to determine the rate of firing
 
 	public AsteroidPlayer (double x, double y, double angle, double acceleration,
 			double velocityDecay, double rotationalSpeed,
-			int shotDelay){
-			// this.x refers to the Players's x, x refers to the x parameter
+			int BulletDelay){
+			// this.x refers to the Player's x, x refers to the x parameter
 			this.x=x;
 			this.y=y;
 			this.angle=angle;
@@ -31,8 +31,8 @@ public class AsteroidPlayer {
 			accelerating=false; // not accelerating
 			xPts=new int[4]; // allocate space for the arrays
 			yPts=new int[4];
-			this.shotDelay=shotDelay; // # of frames between shots
-			shotDelayLeft=0; // ready to shoot
+			this.BulletDelay=BulletDelay; // # of frames between Bullets
+			BulletDelayLeft=0; // ready to shoot
 			}
 
 
@@ -55,8 +55,8 @@ public void draw(Graphics g){
 }
 
 public void move(int scrnWidth, int scrnHeight){
-if(shotDelayLeft>0) //move() is called every frame that the game is run, so this ticks down the shot delay
-shotDelayLeft--; 
+if(BulletDelayLeft>0) //move() is called every frame that the game is run, so this ticks down the Bullet delay
+BulletDelayLeft--; 
 if(turningLeft) //this is backwards from typical polar coordinates
 angle-=rotationalSpeed; //because positive y is downward.
 if(turningRight) //Because of that, adding to the angle is rotating clockwise (to the right)
@@ -104,9 +104,16 @@ public double getRadius(){
 return radius; // returns radius of circle that approximates the Player
 }
 public boolean canShoot(){
-if(shotDelayLeft>0) //checks to see if the Player is ready to shoot again yet or if it needs to wait longer
+if(BulletDelayLeft>0) //checks to see if the Player is ready to shoot again yet or if it needs to wait longer
 return false; 
 else
 return true;
+}
+
+public AsteroidsBullet shoot(){
+BulletDelayLeft = BulletDelay; //set delay till next bullet can be fired
+//a life of 40 makes the bullet travel about the width of the
+//screen before disappearing
+return new AsteroidsBullet(x,y,angle,xVelocity,yVelocity,40);
 }
 }
