@@ -13,11 +13,11 @@ import org.newdawn.slick.SlickException;
 
 public class GameWindow extends BasicGame
 {	
-	public Player player;
+	public Ship ship;
 	//public Enemy asteroid;
 	
 	//public float x, y;
-	public static int height = 800;
+	public static int height = 900;
 	public static int width = 600;
 	
 	Random r = new Random();
@@ -33,20 +33,20 @@ public class GameWindow extends BasicGame
 		// Hide the FPS
 		gc.setShowFPS(false);
 		
-		player = new Player();
+		ship = new Ship();
 		
 	}
 	
 	@Override
 	public void update(GameContainer gc, int i) throws SlickException 
 	{		
-		player.update();
+		ship.update();
 	}
 
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
-		player.render();
+		ship.render();
 	}
 	
 	public static void main(String[] args)

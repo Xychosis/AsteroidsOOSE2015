@@ -7,7 +7,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-public class Player {
+public class Ship {
 
 	Image ship;
 	public static Input input = new Input(0);
@@ -15,32 +15,12 @@ public class Player {
 	private float x, y;
 	private float speed = 10;
 	
-	public Player() throws SlickException
+	public Ship() throws SlickException
 	{
+		// Load image, and subtract the image height/width from the ship's positioning
 		ship = new Image("data/ship.png");
-		x = 400;
-		y = 300;
-	}
-	
-	void wrapper (Image ship)
-	{
-		//Screen wrap
-		if (y < 0-(ship.getHeight()))
-		{
-			y = GameWindow.height;
-		}
-		if (y > GameWindow.height)
-		{
-			y = 0-(ship.getHeight());
-		}
-		if (x < 0-(ship.getWidth()))
-		{
-			x = GameWindow.width;
-		}
-		if (x > GameWindow.width)
-		{
-			x = 0-(ship.getWidth());
-		}
+		y = (GameWindow.width / 2) - ship.getWidth();
+		x = (GameWindow.height / 2) - ship.getHeight();
 	}
 	
 	public void render()
@@ -66,11 +46,35 @@ public class Player {
 		{
 			ship.rotate(2);
 		}
-	
+		
+		if(input.isKeyDown(Input.KEY_SPACE))
+		{
+			
+		}
+		
+		// Apply movement to the ship
 		x += dx;
 		y += dy;
 
 	    dx *= 0.98;
 	    dy *= 0.98;
+	    
+	    // Wrapper
+	    // Wraps height
+	    if (0 > x + ship.getHeight())
+		{
+			x = GameWindow.height;
+		} else if (x > GameWindow.height)
+		{
+			x = -ship.getHeight();
+		}
+	    // Wraps width
+		if (0 > y + ship.getWidth())
+		{
+			y = GameWindow.width;
+		} else if (y > GameWindow.width)
+		{
+			y = -ship.getWidth();
+		}
 	}
 }
