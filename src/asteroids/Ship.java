@@ -1,27 +1,34 @@
 package asteroids;
 
-import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
+
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+
 
 public class Ship {
 
 	Image ship;
 	public static Input input = new Input(0);
-	private float dx, dy;
-	private float x, y;
+	public float dx, dy;
+	public float x, y;
 	private float speed = 10;
+	
+
 	
 	public Ship() throws SlickException
 	{
+		
 		// Load image, and subtract the image height/width from the ship's positioning
 		ship = new Image("data/ship.png");
 		y = (GameWindow.width / 2) - ship.getWidth();
 		x = (GameWindow.height / 2) - ship.getHeight();
+		
+		
 	}
+	
+	
 	
 	public void render()
 	{
@@ -50,6 +57,7 @@ public class Ship {
 		if(input.isKeyDown(Input.KEY_SPACE))
 		{
 			
+		
 		}
 		
 		// Apply movement to the ship
