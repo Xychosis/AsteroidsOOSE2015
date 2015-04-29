@@ -1,38 +1,28 @@
 package asteroids;
 
-
-
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+public class Ship extends Entity {
 
-public class Ship {
-
-	Image ship;
 	public static Input input = new Input(0);
 	public float dx, dy;
-	public float x, y;
-	private float speed = 10;
-	
-
+	private float speed = (float) 10;
+	Image ship = new Image("data/ship.png");;
 	
 	public Ship() throws SlickException
 	{
-		
 		// Load image, and subtract the image height/width from the ship's positioning
-		ship = new Image("data/ship.png");
-		y = (GameWindow.width / 2) - ship.getWidth();
-		x = (GameWindow.height / 2) - ship.getHeight();
-		
-		
+		image = ship;
+		pos.y = (GameWindow.width / 2) - image.getWidth();
+		pos.x = (GameWindow.height / 2) - image.getHeight();
 	}
-	
-	
 	
 	public void render()
 	{
-		ship.draw(x, y);
+		image.draw(pos.x, pos.y);
 	}
 
 	public void update()
@@ -46,43 +36,41 @@ public class Ship {
 	
 		if(input.isKeyDown(Input.KEY_A))
 		{
-			ship.rotate(-2);
+			image.rotate(-2);
 		}
 	
 		if(input.isKeyDown(Input.KEY_D))
 		{
-			ship.rotate(2);
+			image.rotate(2);
 		}
 		
 		if(input.isKeyDown(Input.KEY_SPACE))
 		{
-			
-		
+			// bullet here
 		}
-		
 		// Apply movement to the ship
-		x += dx;
-		y += dy;
+		pos.x += dx;
+		pos.y += dy;
 
 	    dx *= 0.98;
 	    dy *= 0.98;
 	    
-	    // Wrapper
 	    // Wraps height
-	    if (0 > x + ship.getHeight())
+	    if (0 > pos.x + image.getHeight())
 		{
-			x = GameWindow.height;
-		} else if (x > GameWindow.height)
+			pos.x = GameWindow.height;
+		} else if (pos.x > GameWindow.height)
 		{
-			x = -ship.getHeight();
+			pos.x = -image.getHeight();
 		}
+	    
 	    // Wraps width
-		if (0 > y + ship.getWidth())
+		if (0 > pos.y + image.getWidth())
 		{
-			y = GameWindow.width;
-		} else if (y > GameWindow.width)
+			pos.y = GameWindow.width;
+		} else if (pos.y > GameWindow.width)
 		{
-			y = -ship.getWidth();
+			pos.y = -image.getWidth();
 		}
 	}
 }

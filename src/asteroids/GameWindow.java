@@ -19,13 +19,13 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-
 public class GameWindow extends BasicGame
 {	
 	//public Enemy asteroid;
 	//public float x, y;
 	
 	public Ship ship;
+	public Asteroid asteroid;
 	
 	public static int height = 900;
 	public static int width = 600;
@@ -37,8 +37,9 @@ public class GameWindow extends BasicGame
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
 		ship.render();
+		asteroid.render();
 		
-		for( Bullet b : bullets )
+		for(Bullet b : bullets)
 		{
 			b.render(gc, g);
 		}
@@ -49,12 +50,13 @@ public class GameWindow extends BasicGame
 	public void update(GameContainer gc, int t) throws SlickException 
 	{		
 		ship.update();
+		asteroid.update();
 		
 		Iterator<Bullet> i = bullets.iterator();
-		while( i.hasNext() )
+		while(i.hasNext())
 		{
 			Bullet b = i.next();
-			if( b.isAktiv() )
+			if(b.isActive())
 			{
 				b.update(t);
 			}
@@ -66,16 +68,11 @@ public class GameWindow extends BasicGame
  
 		System.out.println(bullets.size());
  
- 
-		if( gc.getInput().isKeyPressed(Input.KEY_SPACE) )
+		if(gc.getInput().isKeyPressed(Input.KEY_SPACE))
 		{
-			bullets.add( new Bullet( new Vector2f(ship.x,ship.y) , new Vector2f(ship.x,ship.y) ) );
+			bullets.add(new Bullet(new Vector2f(ship.pos.x,ship.pos.y), new Vector2f(ship.pos.x,ship.pos.y)));
 		}
 	}
-	
-	
-	
-	
 	
 	@Override
 	public void init(GameContainer gc) throws SlickException
@@ -84,18 +81,16 @@ public class GameWindow extends BasicGame
 		
 		ship = new Ship();	
 		
+		asteroid = new Asteroid();
+		
 		bullets = new LinkedList<Bullet>();
 	}
-	
 	
 	public GameWindow(String gamename)
 	{
 		super(gamename);
 	}
 		
-
-
-	
 	public static void main(String[] args)
 	{
 		try
