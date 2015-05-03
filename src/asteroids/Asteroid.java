@@ -3,26 +3,32 @@ package asteroids;
 import java.util.Random;
 
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class Asteroid extends Entity {
 	
-	public float maxSpeed;
-	public float minSpeed;
+	public float dx, dy;
+	public int dir;
 	
 	Random random = new Random();
 	
 	public Asteroid() throws SlickException
 	{
+		// Initialize asteroid graphics, and determine starting position
 		pos.y = random.nextInt(GameWindow.height);
 		pos.x = random.nextInt(GameWindow.width);
-		init();
+		Setup();
 	}
-
-	private void init() throws SlickException
-	{ 
+	
+	private void Setup() throws SlickException { 
 		image = new Image("data/asteroids.png");
+		
+		// Generate random numbers to determine speed
+		dx = random.nextInt(5);
+		dy = random.nextInt(5);
+				
+		// Generate a random number to determine direction
+		dir = random.nextInt(3);
 	}
 	
 	public void render()
@@ -30,8 +36,27 @@ public class Asteroid extends Entity {
 		image.draw(pos.x, pos.y);
 	}
 
+	@Override
 	public void update()
 	{
+		// Check for the direction of the asteroid, then apply the movement to it
+		if (dir == 0)
+		{
+			pos.x += dx;
+			pos.y += dy;
+		} else if (dir == 1)
+		{
+			pos.x -= dx;
+			pos.y -= dy;
+		} else if (dir == 2)
+		{
+			pos.x -= dx;
+			pos.y += dy;
+		} else if (dir == 3) {
+			pos.x += dx;
+			pos.y -= dy;	
+		}
+
 		// Wraps height
 	    if (0 > pos.x + image.getHeight())
 		{

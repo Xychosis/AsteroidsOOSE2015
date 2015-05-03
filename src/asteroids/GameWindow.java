@@ -81,7 +81,10 @@ public class GameWindow extends BasicGame
 		
 		ship = new Ship();	
 		
-		asteroid = new Asteroid();
+		for (int i=5; i < 6; i++)
+		{
+			asteroid = new Asteroid();
+		}
 		
 		bullets = new LinkedList<Bullet>();
 	}
