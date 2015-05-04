@@ -11,6 +11,8 @@ import java.util.logging.Logger;
 
 
 
+
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
@@ -26,11 +28,11 @@ public class GameWindow extends BasicGame
 	
 	public Ship ship;
 	public Asteroid asteroid;
+	public LinkedList<Bullet> bullets;
 	
 	public static int height = 900;
 	public static int width = 600;
-	public LinkedList<Bullet> bullets;
-	
+		
 	Random r = new Random();
 	
 	@Override
@@ -39,20 +41,20 @@ public class GameWindow extends BasicGame
 		ship.render();
 		asteroid.render();
 		
-		for(Bullet b : bullets)
+		/*for(Bullet b : bullets)
 		{
 			b.render(gc, g);
-		}
+		}*/
 		
 	}
 	
 	@Override
 	public void update(GameContainer gc, int t) throws SlickException 
 	{		
-		ship.update();
-		asteroid.update();
+		ship.update(gc,t);
+		asteroid.update(gc, t);
 		
-		Iterator<Bullet> i = bullets.iterator();
+		/*Iterator<Bullet> i = bullets.iterator();
 		while(i.hasNext())
 		{
 			Bullet b = i.next();
@@ -70,8 +72,8 @@ public class GameWindow extends BasicGame
  
 		if(gc.getInput().isKeyPressed(Input.KEY_SPACE))
 		{
-			bullets.add(new Bullet(new Vector2f(ship.pos.x,ship.pos.y), new Vector2f(ship.pos.x,ship.pos.y)));
-		}
+		bullets.add(new Bullet(new Vector2f(ship.pos.x,ship.pos.y), new Vector2f( ( 0.0025 * t) * Math.sin(Math.toRadians(ship.getRotation()))  )));
+		}*/
 	}
 	
 	@Override
@@ -86,7 +88,7 @@ public class GameWindow extends BasicGame
 			asteroid = new Asteroid();
 		}
 		
-		bullets = new LinkedList<Bullet>();
+		//bullets = new LinkedList<Bullet>();
 	}
 	
 	public GameWindow(String gamename)
