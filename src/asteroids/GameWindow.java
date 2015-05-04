@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 
 
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
@@ -21,6 +22,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class GameWindow extends BasicGame
 {	
+	
 	//public Enemy asteroid;
 	//public float x, y;
 	
@@ -36,6 +38,7 @@ public class GameWindow extends BasicGame
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
+		
 		ship.render();
 		asteroid.render();
 		
@@ -72,6 +75,11 @@ public class GameWindow extends BasicGame
 		{
 			bullets.add(new Bullet(new Vector2f(ship.pos.x,ship.pos.y), new Vector2f(ship.pos.x,ship.pos.y)));
 		}
+		/*if (Asteroid.getCollisionBox(Asteroid.asteroid,10,10,-20,-20).intersects(Ship.getCollisionBox(Ship.ship,5,5,-25,-25)))
+		{
+			System.out.println("There is Collision!!");
+		}*/
+		
 	}
 	
 	@Override
@@ -84,6 +92,8 @@ public class GameWindow extends BasicGame
 		asteroid = new Asteroid();
 		
 		bullets = new LinkedList<Bullet>();
+		
+		
 	}
 	
 	public GameWindow(String gamename)
@@ -93,6 +103,8 @@ public class GameWindow extends BasicGame
 		
 	public static void main(String[] args)
 	{
+		
+	
 		try
 		{
 			// Define the game window, resolution et al.
@@ -102,10 +114,12 @@ public class GameWindow extends BasicGame
 			appgc.setVSync(true);
 			appgc.setTargetFrameRate(60);
 			appgc.start();
+			
 		} 
 		catch (SlickException ex)
 		{
 			Logger.getLogger(GameWindow.class.getName()).log(Level.SEVERE, null, ex);
 		}
+		
 	}
 }

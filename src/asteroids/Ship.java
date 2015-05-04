@@ -1,5 +1,7 @@
 package asteroids;
 
+import java.awt.Rectangle;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
@@ -73,4 +75,10 @@ public class Ship extends Entity {
 			pos.y = -image.getWidth();
 		}
 	}
-}
+	Rectangle getCollisionBox(Image sprite, int offsetX, int offsetY, int offsetWidth, int offsetHeight)
+	{
+		return new Rectangle((int)pos.x + offsetX, (int)pos.y + offsetY, sprite.getWidth() + offsetWidth, sprite.getHeight() + offsetHeight);
+		
+	}
+	}
+	
