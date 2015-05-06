@@ -6,13 +6,6 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-
-
-
-
-
-
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
@@ -21,85 +14,78 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-public class GameWindow extends BasicGame
-{	
-	//public Enemy asteroid;
-	//public float x, y;
+public class GameWindow extends BasicGame {
 	
+	// public Enemy asteroid;
+	// public float x, y;
+
 	public Ship ship;
 	public Asteroid asteroid;
-	public LinkedList<Bullet> bullets;
-	
+	public static LinkedList<Bullet> bullets;
+
 	public static int height = 900;
 	public static int width = 600;
-		
+
 	Random r = new Random();
-	
+
 	@Override
-	public void render(GameContainer gc, Graphics g) throws SlickException
+	public void render(GameContainer gc, Graphics g) throws SlickException 
 	{
 		ship.render();
 		asteroid.render();
-		
-		/*for(Bullet b : bullets)
-		{
+
+		for (Bullet b : bullets) {
 			b.render(gc, g);
-		}*/
-		
+		}
+
 	}
-	
+
 	@Override
 	public void update(GameContainer gc, int t) throws SlickException 
-	{		
-		ship.update(gc,t);
+	{
+		ship.update(gc, t);
 		asteroid.update(gc, t);
-		
-		/*Iterator<Bullet> i = bullets.iterator();
-		while(i.hasNext())
-		{
+
+		Iterator<Bullet> i = bullets.iterator();
+		while (i.hasNext()) {
 			Bullet b = i.next();
-			if(b.isActive())
-			{
+			if (b.isActive()) {
 				b.update(t);
-			}
-			else
-			{
+			} else {
 				i.remove();
 			}
 		}
- 
-		System.out.println(bullets.size());
- 
-		if(gc.getInput().isKeyPressed(Input.KEY_SPACE))
-		{
-		bullets.add(new Bullet(new Vector2f(ship.pos.x,ship.pos.y), new Vector2f( ( 0.0025 * t) * Math.sin(Math.toRadians(ship.getRotation()))  )));
-		}*/
+
+		//System.out.println(bullets.size());
+
+		if (gc.getInput().isKeyPressed(Input.KEY_SPACE)) {
+			bullets.add(new Bullet(new Vector2f(ship.pos.x, ship.pos.y),
+					ship.rotation));
+		}
 	}
-	
+
 	@Override
-	public void init(GameContainer gc) throws SlickException
+	public void init(GameContainer gc) throws SlickException 
 	{
 		gc.setShowFPS(false); // Hide the FPS
-		
-		ship = new Ship();	
-		
-		for (int i=5; i < 6; i++)
-		{
+
+		ship = new Ship();
+
+		for (int i = 5; i < 6; i++) {
 			asteroid = new Asteroid();
 		}
-		
-		//bullets = new LinkedList<Bullet>();
+
+		bullets = new LinkedList<Bullet>();
 	}
-	
+
 	public GameWindow(String gamename)
 	{
 		super(gamename);
 	}
-		
-	public static void main(String[] args)
+
+	public static void main(String[] args) 
 	{
-		try
-		{
+		try {
 			// Define the game window, resolution et al.
 			AppGameContainer appgc;
 			appgc = new AppGameContainer(new GameWindow("Asteroids!"));
@@ -107,10 +93,9 @@ public class GameWindow extends BasicGame
 			appgc.setVSync(true);
 			appgc.setTargetFrameRate(60);
 			appgc.start();
-		} 
-		catch (SlickException ex)
-		{
-			Logger.getLogger(GameWindow.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (SlickException ex) {
+			Logger.getLogger(GameWindow.class.getName()).log(Level.SEVERE,
+					null, ex);
 		}
 	}
 }

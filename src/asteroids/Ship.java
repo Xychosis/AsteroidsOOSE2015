@@ -5,45 +5,35 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-public class Ship extends Entity {
+public class Ship extends Entity 
+{
 
-	public static Input input = null;
-	Image ship = new Image("data/ship.png");
-	private double rotAmt       = 0.3;
 	public float accelForce    = (float) 0.0025;
-	public double forceX, forceY;
+	public static Input input = null;
+	private double rotAmt = 0.1;
+	public float x,y;
+	public float dx,dy;
+	public float speed = 10;
 	
-	//public float dx, dy;
-	//private float speed = (float) 10;
+	Image ship = new Image("data/ship3.png");
 	
 	public Ship() throws SlickException
 	{
 		// Load image, and subtract the image height/width from the ship's positioning
 		image = ship;
 		input = new Input(0);
-		pos.y = (GameWindow.width / 2) - image.getWidth();
-		pos.x = (GameWindow.height / 2) - image.getHeight();
+		pos.y = (GameWindow.width / 2) - image.getWidth() / 2;
+		pos.x = (GameWindow.height / 2) - image.getHeight() / 4;
 	}
 	
-	public void render()
-	{
-		image.draw(pos.x, pos.y);
-	}
-
 	public void update(GameContainer container, int delta) throws SlickException
 	{
-		// Player movement
+		// Player movements
 		
-		if(input.isKeyDown(Input.KEY_SPACE))
-		{
-			FireShot.fireShot(this, input);
-		}
-	
 		if(input.isKeyDown(Input.KEY_A))
 		{
 			rotation -= rotAmt * delta;
 			image.rotate((float)(-rotAmt * delta));
-			//image.rotate(-2);
 		}
 	
 		if(input.isKeyDown(Input.KEY_D))
@@ -53,30 +43,19 @@ public class Ship extends Entity {
 			//image.rotate(2);
 		}
 		
-		
-		
 		if(input.isKeyDown(Input.KEY_W))
-		{
-			
-			
-			forceX = (accelForce * delta) * Math.sin(Math.toRadians(rotation));
-			forceY = (accelForce * delta) * Math.cos(Math.toRadians(rotation));
-			
-			vel.x += (float)forceX;
-			vel.y += (float)forceY;
-			
-			//dx += Math.sin(Math.toRadians(ship.getRotation())) * speed * 0.01;
-			//dy += -Math.cos(Math.toRadians(ship.getRotation())) * speed * 0.01;
+		{	
+			dx += Math.cos(Math.toRadians(ship.getRotation())) * speed * 0.01; 
+			dy += Math.sin(Math.toRadians(ship.getRotation())) * speed * 0.01; 	
 		}
 		
 		// Apply movement to the ship
-		//pos.x += dx;
-		//pos.y += dy;
+		pos.x += dx;
+		pos.y += dy;
 
-	    //dx *= 0.98;
-	    //dy *= 0.98;
+	    dx *= 0.98;
+	    dy *= 0.98;
 	    
-		
 	    // Wraps height
 	    if (0 > pos.x + image.getHeight())
 		{
@@ -94,8 +73,12 @@ public class Ship extends Entity {
 		{
 			pos.y = -image.getWidth();
 		}
-		
-		super.update(container, delta);
+	    
+	}
+	
+	public void render()
+	{
+		image.draw(pos.x, pos.y);
 	}
 
 
