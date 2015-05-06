@@ -7,11 +7,15 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 
 public class Asteroid extends Entity {
 	
 	public float dx, dy;
 	public int dir;
+	public float size;
+	Image asteroid = new Image("data/asteroids.png");
+	Image asteroidSmall = new Image("data/asteroids.png");
 	
 	Random random = new Random();
 	
@@ -20,12 +24,21 @@ public class Asteroid extends Entity {
 		// Initialize asteroid graphics, and determine starting position
 		pos.y = random.nextInt(GameWindow.height);
 		pos.x = random.nextInt(GameWindow.width);
+		image = asteroid;
+		Setup();
+	}
+	
+	public void SplitAsteroid (float size, Vector2f spawnPos) throws SlickException
+	{
+		// Initialize smaller asteroids
+		pos.y = spawnPos.x;
+		pos.x = spawnPos.y;
+		image = asteroidSmall;
 		Setup();
 	}
 
-	private void Setup() throws SlickException { 
-		image = new Image("data/asteroids.png");
-		
+	private void Setup() throws SlickException
+	{ 
 		// Generate random numbers to determine speed
 		dx = random.nextInt(5);
 		dy = random.nextInt(5);
