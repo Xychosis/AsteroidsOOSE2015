@@ -1,11 +1,10 @@
 package asteroids;
 
-//import java.awt.Rectangle;
+import java.awt.Rectangle;
 import java.util.Random;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -16,6 +15,7 @@ public class Asteroid extends Entity {
 	public float size;
 	Image asteroid = new Image("data/asteroids.png");
 	Image asteroidSmall = new Image("data/asteroids.png");
+	public boolean active = true;
 	
 	Random random = new Random();
 	
@@ -49,7 +49,11 @@ public class Asteroid extends Entity {
 	
 	public void render()
 	{
+		if(active)
+		{
 		image.draw(pos.x, pos.y);
+		}
+		
 	}
 
 	public void update(GameContainer container, int delta)
@@ -90,8 +94,9 @@ public class Asteroid extends Entity {
 			pos.y = -image.getWidth();
 		}
 	}
-	/*Rectangle getCollisionBox(Image sprite, int offsetX, int offsetY, int offsetWidth, int offsetHeight)
+	
+	Rectangle getCollisionBox(Image sprite, int offsetX, int offsetY, int offsetWidth, int offsetHeight)
 	{
-		return new Rectangle((int)pos.x + offsetX, (int)pos.y + offsetY, sprite.getWidth() + offsetWidth, sprite.getHeight() + offsetHeight);
-	}*/
+		return new Rectangle((int)pos.x + offsetX, (int)pos.y + offsetY, sprite.getWidth() + offsetWidth, sprite.getHeight() + offsetHeight); 
+	}
 }

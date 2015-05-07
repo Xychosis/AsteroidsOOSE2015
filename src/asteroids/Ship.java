@@ -1,6 +1,6 @@
 package asteroids;
 
-//import java.awt.Rectangle;
+import java.awt.Rectangle;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
@@ -10,7 +10,7 @@ import org.newdawn.slick.SlickException;
 public class Ship extends Entity {
 
 	public static Input input = null;
-	Image ship = new Image("data/ship.png");
+	Image ship = new Image("data/ship3.png");
 	private double rotAmt = 0.3;
 	public float accelForce = (float) 0.0055;
 	public double forceX, forceY;
@@ -81,6 +81,11 @@ public class Ship extends Entity {
 	public void render()
 	{
 		image.draw(pos.x, pos.y);
+	}
+	
+	Rectangle getCollisionBox(Image sprite, int offsetX, int offsetY, int offsetWidth, int offsetHeight)
+	{
+		return new Rectangle((int)pos.x + offsetX, (int)pos.y + offsetY, sprite.getWidth() + offsetWidth, sprite.getHeight() + offsetHeight);
 	}
 
 	/*public float getX() {
