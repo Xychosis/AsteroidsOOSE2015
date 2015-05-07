@@ -1,72 +1,109 @@
 package asteroids;
 
+import java.awt.Rectangle;
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
- 
-public class Bullet 
-{
+public class Bullet extends Entity
+{		
 	private Vector2f pos;
 	private Vector2f speed;
 	private float shipSpeed = 10f;
-	
-	
-//	private int lived = 0;
+	Image bullet = new Image("data/bullet.png");
  
 	private boolean active = true;
+	private float lived;
  
+	//private int lived = 0;
 	//private static int MAX_LIFETIME = 2000;
  
-	public Bullet (Vector2f pos, Vector2f speed) throws SlickException
+	/*public Bullet (Vector2f pos, Vector2f speed) throws SlickException
 	{
 		this.pos = pos;
 		this.speed = speed;
-		
+	
 	}
  
 	public Bullet (Ship ship) throws SlickException
 	{
 		active = false;
-	}
+		
+	}*/
 	
-	public Bullet (Vector2f startPos, float rotation)
+	public Bullet (Vector2f startPos, float rotation) throws SlickException
 	{
+		//active = false;
+		//this.pos = pos;
+		//this.speed = speed;
 		this.pos = startPos;
+		
 		float x = shipSpeed * (float) (Math.cos( (double) Math.toRadians(rotation)));
 		float y = shipSpeed * (float) (Math.sin( (double) Math.toRadians(rotation)));
 		this.speed = new Vector2f(x, y);
-		System.out.println("bullet rotation: " + rotation);
+		//System.out.println("bullet rotation: " + rotation);
+		image = bullet;
 	}
-
  
-	public void update(int t)
+	public void update(float t)
 	{
+		//System.out.println("tempo:" + t);
+	
+//		
+		
 		if(active)
-		{			
+		{
 			pos.add(speed);
-			//lived += t;
+			
+			lived += t;
 			//if(lived > MAX_LIFETIME) active = false;
 		}
 		
+		if(lived >= 2000)
+		{
+			active  = false;
+		 }
+		
+		//System.out.println(lived);
+		
+		// Wraps height
+	    if (0 > pos.x + image.getHeight())
+		{
+			pos.x = GameWindow.height;
+		} else if (pos.x > GameWindow.height)
+		{
+			pos.x = -image.getHeight();
+		}
+	    
+	    // Wraps width
+		if (0 > pos.y + image.getWidth())
+		{
+			pos.y = GameWindow.width;
+		} else if (pos.y > GameWindow.width)
+		{
+			pos.y = -image.getWidth();
+		}
 	}
  
-	public void render(GameContainer gc, Graphics g) throws SlickException 
+	public void render() throws SlickException 
 	{
 		if(active)
 		{
-			g.setColor(Color.red);
-			g.fillOval(pos.getX()-10, pos.getY()-10, 20, 20);
+			image.draw(pos.getX(), pos.getY());
+		
+			//g.setColor(Color.red);
+			//g.fillOval(pos.getX(), pos.getY()-10, 20, 20);
 		}
 	}
  
 	public boolean isActive()
 	{
 		return active;
-	} 
- 
+	}
+	
+	Rectangle getCollisionBox(Image sprite, int offsetX, int offsetY, int offsetWidth, int offsetHeight)
+	{
+		return new Rectangle((int)pos.x + offsetX, (int)pos.y + offsetY, sprite.getWidth() + offsetWidth, sprite.getHeight() + offsetHeight); 
+	}
 }
