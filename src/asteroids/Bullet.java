@@ -8,7 +8,6 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class Bullet extends Entity
 {		
-	//private Vector2f pos;
 	private Vector2f speed;
 	private float shipSpeed = 10f;
 	Image bullet = new Image("data/bullet.png");

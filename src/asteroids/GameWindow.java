@@ -29,6 +29,8 @@ public class GameWindow extends BasicGame
 	Image life;
 	int lifes = 3;
 	
+	int score = 0;
+	
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
@@ -43,6 +45,8 @@ public class GameWindow extends BasicGame
 		//render the ship
 		ship.render();
 
+		g.drawString("score: " + score, 990, 300);
+		
 		//render the asteroids (since asteroids is a list, a for loop is created)
 		for( Asteroid a: asteroids)
 		{
@@ -118,6 +122,8 @@ public class GameWindow extends BasicGame
 				{
 					System.out.println("Bullet hit an asteroid");
 					asteroids.remove(asteroids.get(y));
+					asteroids.add(new Asteroid());
+					score += 10;
 								
 				}
 			}
