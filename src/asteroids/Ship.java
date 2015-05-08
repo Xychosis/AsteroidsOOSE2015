@@ -1,6 +1,6 @@
 package asteroids;
 
-import java.awt.Rectangle;
+
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
@@ -10,10 +10,11 @@ import org.newdawn.slick.SlickException;
 public class Ship extends Entity {
 
 	public static Input input = null;
-	Image ship = new Image("data/ship3.png");
+	Image ship = new Image("data/ship-2.png");
 	private double rotAmt = 0.3;
 	public float accelForce = (float) 0.0055;
 	public double forceX, forceY;
+	public boolean active = true;
 	
 	public Ship() throws SlickException
 	{
@@ -22,6 +23,7 @@ public class Ship extends Entity {
 		input = new Input(0);
 		pos.y = (GameWindow.width / 2) - image.getWidth() / 2;
 		pos.x = (GameWindow.height / 2) - image.getHeight() / 4;
+		
 	}
 
 	public void update(GameContainer container, int delta) throws SlickException
@@ -80,6 +82,7 @@ public class Ship extends Entity {
 	
 	public void render()
 	{
+		if(active)
 		image.draw(pos.x, pos.y);
 	}
 	

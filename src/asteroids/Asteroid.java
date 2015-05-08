@@ -13,8 +13,8 @@ public class Asteroid extends Entity {
 	public float dx, dy;
 	public int dir;
 	public float size;
-	Image asteroid = new Image("data/asteroids.png");
-	Image asteroidSmall = new Image("data/asteroids.png");
+	Image asteroid = new Image("data/asteroid-2.png");
+	Image asteroidSmall = new Image("data/asteroid-2.png");
 	public boolean active = true;
 	
 	Random random = new Random();
@@ -98,5 +98,10 @@ public class Asteroid extends Entity {
 	Rectangle getCollisionBox(Image sprite, int offsetX, int offsetY, int offsetWidth, int offsetHeight)
 	{
 		return new Rectangle((int)pos.x + offsetX, (int)pos.y + offsetY, sprite.getWidth() + offsetWidth, sprite.getHeight() + offsetHeight); 
+	}
+
+	public boolean isActive() {
+		// TODO Auto-generated method stub
+		return active;
 	}
 }

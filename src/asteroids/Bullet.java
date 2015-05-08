@@ -1,6 +1,6 @@
 package asteroids;
 
-import java.awt.Rectangle;
+
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -86,7 +86,7 @@ public class Bullet extends Entity
 		}
 	}
  
-	public void render() throws SlickException 
+	public void render() 
 	{
 		if(active)
 		{

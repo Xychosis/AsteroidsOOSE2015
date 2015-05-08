@@ -2,13 +2,14 @@ package asteroids;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
@@ -18,116 +19,49 @@ public class GameWindow extends BasicGame
 	public Ship ship;
 	public LinkedList<Bullet> bullets;
 	public Bullet bullet;
+	public LinkedList<Asteroid> asteroids;
 	
-	// Define the asteroids. Make more to correspond with the amount of asteroids that the game should have
-	public Asteroid asteroid1, asteroid2, asteroid3, asteroid4, asteroid5;
+	public boolean numAst = true;
 	
-	public static int height = 800; //height of the screen
-	public static int width = 600; // width of the screen
-		
-	//Random r = new Random();
+	public static int height = 1280; //height of the screen
+	public static int width = 1280; // width of the screen
+	
+	Image life;
+	int lifes = 3;
 	
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
-		//render the ship, bullet and asteroids
+		//render the lifes
+		if(lifes == 3)
+			life.draw(300,300);
+		if(lifes >=2)
+			life.draw(200,300);
+		if(lifes>=1)
+			life.draw(100,300);
+				
+		//render the ship
 		ship.render();
+
+		//render the asteroids (since asteroids is a list, a for loop is created)
+		for( Asteroid a: asteroids)
+		{
+			a.render();
+		}
 		
-		asteroid1. render();
-		asteroid2.render();
-		asteroid3.render();
-		asteroid4.render();
-		asteroid5.render();
 		
-		
-		//since bullets is a list, a for loop is created
+		//render the bullets (since bullets is a list, a for loop is created)
 		for( Bullet b: bullets)
 		{
 			b.render();	
 		}
-	
-		
-		// Collision detection between bullets and asteroids
-		for(int i=0;  i<bullets.size(); i++)
-		{
-			
-			if(bullets.get(i).getCollisionBox(asteroid1))
-			{
-				System.out.println("Bullet hit an asteroid");
-				asteroid1.active = false;
-			}
-		
-			else if(bullets.get(i).getCollisionBox(asteroid2))
-			{
-				System.out.println("Bullet hit an asteroid");
-				asteroid2.active = false;
-			}
-			
-			else if(bullets.get(i).getCollisionBox(asteroid3))
-			{
-				System.out.println("Bullet hit an asteroid");
-				asteroid3.active = false;
-			}
-			
-			else if(bullets.get(i).getCollisionBox(asteroid4))
-			{
-				System.out.println("Bullet hit an asteroid");
-				asteroid4.active = false;
-			}
-			
-			else if(bullets.get(i).getCollisionBox(asteroid5))
-			{
-				System.out.println("Bullet hit an asteroid");
-				asteroid5.active = false;
-			}
-		}
-		
-		
-		// Collision detection between ship and asteroids
-		
-		if(ship.getCollisionBox(asteroid1))
-		{
-			System.out.println("Bullet hit an asteroid");
-			asteroid1.active = false;
-		}
-	
-		else if(ship.getCollisionBox(asteroid2))
-		{
-			System.out.println("Bullet hit an asteroid");
-			asteroid2.active = false;
-		}
-		
-		else if(ship.getCollisionBox(asteroid3))
-		{
-			System.out.println("Bullet hit an asteroid");
-			asteroid3.active = false;
-		}
-		
-		else if(ship.getCollisionBox(asteroid4))
-		{
-			System.out.println("Bullet hit an asteroid");
-			asteroid4.active = false;
-		}
-		
-		else if(ship.getCollisionBox(asteroid5))
-		{
-			System.out.println("Bullet hit an asteroid");
-			asteroid5.active = false;
-		}
-		
 	}
 	
 	@Override
 	public void update(GameContainer gc, int t) throws SlickException 
 	{		
 		ship.update(gc,t);
-		
-		asteroid1.update(gc,t);
-		asteroid2.update(gc,t);
-		asteroid3.update(gc,t);
-		asteroid4.update(gc,t);
-		asteroid5.update(gc,t);
-		
+	
 		Iterator<Bullet> i = bullets.iterator();
 		while(i.hasNext())
 		{
@@ -141,31 +75,83 @@ public class GameWindow extends BasicGame
 				i.remove();
 			}
 		}
- 
+		
+		Iterator<Asteroid> j = asteroids.iterator();
+		while(j.hasNext())
+		{
+			Asteroid a= j.next();
+			if(a.isActive())
+			{
+				a.update(gc,t);
+			}
+			else
+			{
+				j.remove();
+			}
+		}
+		
 		//System.out.println(bullets.size());
 		
 		if(gc.getInput().isKeyPressed(Input.KEY_SPACE))
 		{
 			bullets.add(new Bullet(new Vector2f(ship.pos.x, ship.pos.y),ship.rotation));
 		}
+		
+		if(numAst)
+		{
+			for(int index=0;index<5;index++)
+			{
+				asteroids.add(new Asteroid());
+			}
+			
+			numAst = false; // small trick. Otherwise the asteroids are created forever
+			
+		}
+
+		// Collision detection between bullets and asteroids
+		for(int x=0;  x<bullets.size(); x++)
+		{
+			for(int y=0; y<asteroids.size();y++)
+			{
+			
+				if(bullets.get(x).getCollisionBox(asteroids.get(y)))
+				{
+					System.out.println("Bullet hit an asteroid");
+					asteroids.remove(asteroids.get(y));
+								
+				}
+			}
+		}
+		
+		// Collision detection between ship and asteroids
+			for(int y=0; y<asteroids.size();y++)
+			{
+				if(ship.getCollisionBox(asteroids.get(y)))
+				{
+					System.out.println("Ship hit an asteroid");
+					asteroids.remove(asteroids.get(y));
+					lifes--;	
+				}
+			}	
+			
+			if(lifes == 0)
+			{
+				//restart the game
+			}
 	}
+	
 	
 	@Override
 	public void init(GameContainer gc) throws SlickException
 	{
 		gc.setShowFPS(false); // Hide the FPS
-		
+	
 		ship = new Ship();	
-		
-		// Create asteroids
-		asteroid1 = new Asteroid();
-		asteroid2 = new Asteroid();
-		asteroid3 = new Asteroid();
-		asteroid4 = new Asteroid();
-		asteroid5 = new Asteroid();
-		
+		asteroids = new LinkedList<Asteroid>();
 		bullets = new LinkedList<Bullet>();
+		life = new Image("data/heart.png");
 	}
+	
 	
 	public GameWindow(String gamename)
 	{
