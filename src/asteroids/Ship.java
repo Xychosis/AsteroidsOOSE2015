@@ -1,7 +1,5 @@
 package asteroids;
 
-
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
@@ -30,18 +28,21 @@ public class Ship extends Entity {
 	{
 		// Ship movement
 		
+		// Rotation of the ship when pressing A. This turns the ship to the left
 		if(input.isKeyDown(Input.KEY_A))
 		{
 			rotation -= rotAmt * delta;
 			image.rotate((float)(-rotAmt * delta));
 		}
 	
+		// Turns the ship to the right
 		if(input.isKeyDown(Input.KEY_D))
 		{
 			rotation += rotAmt * delta;
 			image.rotate((float) (rotAmt * delta));
 		}
 		
+		// When player is pressing the W key
 		if(input.isKeyDown(Input.KEY_W))
 		{	
 			forceY = (accelForce * delta) * Math.sin(Math.toRadians(rotation));
@@ -82,14 +83,9 @@ public class Ship extends Entity {
 	
 	public void render()
 	{
-		if(active)
 		image.draw(pos.x, pos.y);
 	}
-	
-	/*Rectangle getCollisionBox(Image sprite, int offsetX, int offsetY, int offsetWidth, int offsetHeight)
-	{
-		return new Rectangle((int)pos.x + offsetX, (int)pos.y + offsetY, sprite.getWidth() + offsetWidth, sprite.getHeight() + offsetHeight);
-	}*/
+
 	
 	boolean getCollisionBox(Asteroid other)
 	{

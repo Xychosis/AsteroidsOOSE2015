@@ -28,7 +28,6 @@ public class GameWindow extends BasicGame
 	
 	Image life;
 	int lifes = 3;
-	
 	int score = 0;
 	
 	@Override
@@ -45,6 +44,7 @@ public class GameWindow extends BasicGame
 		//render the ship
 		ship.render();
 
+		//string output for score
 		g.drawString("score: " + score, 990, 300);
 		
 		//render the asteroids (since asteroids is a list, a for loop is created)
@@ -52,7 +52,6 @@ public class GameWindow extends BasicGame
 		{
 			a.render();
 		}
-		
 		
 		//render the bullets (since bullets is a list, a for loop is created)
 		for( Bullet b: bullets)
@@ -65,7 +64,7 @@ public class GameWindow extends BasicGame
 	public void update(GameContainer gc, int t) throws SlickException 
 	{		
 		ship.update(gc,t);
-	
+		
 		Iterator<Bullet> i = bullets.iterator();
 		while(i.hasNext())
 		{
@@ -95,32 +94,33 @@ public class GameWindow extends BasicGame
 		}
 		
 		//System.out.println(bullets.size());
-		
+		//if SPACE is pressed, add a new bullet to the list
 		if(gc.getInput().isKeyPressed(Input.KEY_SPACE))
 		{
 			bullets.add(new Bullet(new Vector2f(ship.pos.x, ship.pos.y),ship.rotation));
 		}
 		
+		// when numAst is true
 		if(numAst)
 		{
-			for(int index=0;index<5;index++)
+			// Run loop to spawn the defined number of asteroids at the start. The number is defined in the loop
+			for(int index=0;index<6;index++)
 			{
 				asteroids.add(new Asteroid());
-			}
-			
-			numAst = false; // small trick. Otherwise the asteroids are created forever
-			
+			}	
+			numAst = false; // small trick. Otherwise the asteroids are created forever		
 		}
-
+		
 		// Collision detection between bullets and asteroids
 		for(int x=0;  x<bullets.size(); x++)
 		{
 			for(int y=0; y<asteroids.size();y++)
 			{
-			
+				// When the bullet collides with an asteroid
 				if(bullets.get(x).getCollisionBox(asteroids.get(y)))
 				{
-					System.out.println("Bullet hit an asteroid");
+					//System.out.println("Bullet hit an asteroid");
+					// Remove the asteroid that was hit, and spawn a new one at the same time. Also add 10 points to the total score
 					asteroids.remove(asteroids.get(y));
 					asteroids.add(new Asteroid());
 					score += 10;
@@ -132,26 +132,28 @@ public class GameWindow extends BasicGame
 		// Collision detection between ship and asteroids
 			for(int y=0; y<asteroids.size();y++)
 			{
+				// When the ship collides with an asteroid
 				if(ship.getCollisionBox(asteroids.get(y)))
 				{
-					System.out.println("Ship hit an asteroid");
+					//System.out.println("Ship hit an asteroid");
+					// Remove the asteroid and decrement the total amount of lives by one
 					asteroids.remove(asteroids.get(y));
 					lifes--;	
 				}
 			}	
-			
+			// When there are no lives left
 			if(lifes == 0)
 			{
-				//restart the game
+				gc.exit();//Exit the game
 			}
 	}
-	
 	
 	@Override
 	public void init(GameContainer gc) throws SlickException
 	{
 		gc.setShowFPS(false); // Hide the FPS
 	
+		// Spawn the game objects
 		ship = new Ship();	
 		asteroids = new LinkedList<Asteroid>();
 		bullets = new LinkedList<Bullet>();
@@ -164,6 +166,7 @@ public class GameWindow extends BasicGame
 		super(gamename);
 	}
 		
+	
 	public static void main(String[] args)
 	{
 		try
@@ -175,12 +178,10 @@ public class GameWindow extends BasicGame
 			appgc.setVSync(true);
 			appgc.setTargetFrameRate(60);
 			appgc.start();
-		} 
-		
+		} 	
 		catch (SlickException ex)
 		{
 			Logger.getLogger(GameWindow.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		
 	}
 }

@@ -1,7 +1,5 @@
 package asteroids;
 
-
-
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
@@ -14,28 +12,9 @@ public class Bullet extends Entity
  
 	private boolean active = true;
 	private float lived;
- 
-	//private int lived = 0;
-	//private static int MAX_LIFETIME = 2000;
- 
-	/*public Bullet (Vector2f pos, Vector2f speed) throws SlickException
-	{
-		this.pos = pos;
-		this.speed = speed;
-	
-	}
- 
-	public Bullet (Ship ship) throws SlickException
-	{
-		active = false;
-		
-	}*/
 	
 	public Bullet (Vector2f startPos, float rotation) throws SlickException
 	{
-		//active = false;
-		//this.pos = pos;
-		//this.speed = speed;
 		this.pos = startPos;
 		
 		float x = shipSpeed * (float) (Math.cos( (double) Math.toRadians(rotation)));
@@ -47,22 +26,19 @@ public class Bullet extends Entity
  
 	public void update(float t)
 	{
-		//System.out.println("tempo:" + t);
-	
-//		
-		
+		//System.out.println("tempo:" + t);		
+		// When the bullet is toggled as active
 		if(active)
 		{
 			pos.add(speed);
-			
 			lived += t;
-			//if(lived > MAX_LIFETIME) active = false;
 		}
 		
+		// Internal life time of the bullet. It disappears when it goes above 1000 ms
 		if(lived >= 1000)
 		{
 			active  = false;
-		 }
+		}
 		
 		//System.out.println(lived);
 		
@@ -87,20 +63,16 @@ public class Bullet extends Entity
  
 	public void render() 
 	{
-		if(active)
-		{
-			image.draw(pos.getX(), pos.getY());
-		
-			//g.setColor(Color.red);
-			//g.fillOval(pos.getX(), pos.getY()-10, 20, 20);
-		}
+		image.draw(pos.getX(), pos.getY());
 	}
  
+	// Getter for isActive
 	public boolean isActive()
 	{
 		return active;
 	}
 	
+	// Collider method. Returns true if bullet collides with the asteroid
 	boolean getCollisionBox(Asteroid other)
 	{
 		return (this.pos.x - this.image.getWidth()/2 < other.pos.x + other.image.getWidth()/2) &&
@@ -109,6 +81,4 @@ public class Bullet extends Entity
                 (other.pos.y - other.image.getHeight()/2 < this.pos.y + this.image.getHeight()/2);
 		
 	}
-
-	
 }

@@ -1,12 +1,10 @@
 package asteroids;
 
-import java.awt.Rectangle;
 import java.util.Random;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Vector2f;
 
 public class Asteroid extends Entity {
 	
@@ -14,7 +12,6 @@ public class Asteroid extends Entity {
 	public int dir;
 	public float size;
 	Image asteroid = new Image("data/asteroid-2.png");
-	Image asteroidSmall = new Image("data/asteroid-2.png");
 	public boolean active = true;
 	
 	Random random = new Random();
@@ -27,15 +24,7 @@ public class Asteroid extends Entity {
 		image = asteroid;
 		Setup();
 	}
-	
-	public void SplitAsteroid (float size, Vector2f spawnPos) throws SlickException
-	{
-		// Initialize smaller asteroids
-		pos.y = spawnPos.x;
-		pos.x = spawnPos.y;
-		image = asteroidSmall;
-		Setup();
-	}
+
 
 	private void Setup() throws SlickException
 	{ 
@@ -49,11 +38,7 @@ public class Asteroid extends Entity {
 	
 	public void render()
 	{
-		if(active)
-		{
-		image.draw(pos.x, pos.y);
-		}
-		
+		image.draw(pos.x, pos.y);	
 	}
 
 	public void update(GameContainer container, int delta)
@@ -95,13 +80,9 @@ public class Asteroid extends Entity {
 		}
 	}
 	
-	Rectangle getCollisionBox(Image sprite, int offsetX, int offsetY, int offsetWidth, int offsetHeight)
+	// Getter for the isActive boolean
+	public boolean isActive()
 	{
-		return new Rectangle((int)pos.x + offsetX, (int)pos.y + offsetY, sprite.getWidth() + offsetWidth, sprite.getHeight() + offsetHeight); 
-	}
-
-	public boolean isActive() {
-		// TODO Auto-generated method stub
 		return active;
 	}
 }
