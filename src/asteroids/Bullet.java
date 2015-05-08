@@ -8,7 +8,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class Bullet extends Entity
 {		
-	private Vector2f pos;
+	//private Vector2f pos;
 	private Vector2f speed;
 	private float shipSpeed = 10f;
 	Image bullet = new Image("data/bullet.png");
@@ -60,7 +60,7 @@ public class Bullet extends Entity
 			//if(lived > MAX_LIFETIME) active = false;
 		}
 		
-		if(lived >= 2000)
+		if(lived >= 1000)
 		{
 			active  = false;
 		 }
@@ -102,8 +102,14 @@ public class Bullet extends Entity
 		return active;
 	}
 	
-	Rectangle getCollisionBox(Image sprite, int offsetX, int offsetY, int offsetWidth, int offsetHeight)
+	boolean getCollisionBox(Asteroid other)
 	{
-		return new Rectangle((int)pos.x + offsetX, (int)pos.y + offsetY, sprite.getWidth() + offsetWidth, sprite.getHeight() + offsetHeight); 
+		return (this.pos.x - this.image.getWidth()/2 < other.pos.x + other.image.getWidth()/2) &&
+                (other.pos.x - other.image.getWidth()/2 < this.pos.x + this.image.getWidth()/2) &&
+                (this.pos.y - this.image.getHeight()/2< other.pos.y + other.image.getHeight()/2) &&
+                (other.pos.y - other.image.getHeight()/2 < this.pos.y + this.image.getHeight()/2);
+		
 	}
+
+	
 }

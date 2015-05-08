@@ -46,61 +46,75 @@ public class GameWindow extends BasicGame
 			b.render();	
 		}
 	
-		/*for(int i=0;  i<bullets.size(); i++)
+		
+		// Collision detection between bullets and asteroids
+		for(int i=0;  i<bullets.size(); i++)
 		{
-			if (asteroid1.getCollisionBox(asteroid1.image,10,10,asteroid1.image.getWidth()-20,asteroid1.image.getHeight()-20).intersects(bullets.get(i).getCollisionBox(bullet.image,20,20,bullet.image.getWidth()-25,bullet.image.getHeight()-25))
-			 || asteroid2.getCollisionBox(asteroid2.image,10,10,asteroid2.image.getWidth()-20,asteroid2.image.getHeight()-20).intersects(bullets.get(i).getCollisionBox(bullet.image,20,20,bullet.image.getWidth()-25,bullet.image.getHeight()-25))
-			 || asteroid3.getCollisionBox(asteroid3.image,10,10,asteroid3.image.getWidth()-20,asteroid3.image.getHeight()-20).intersects(bullets.get(i).getCollisionBox(bullet.image,20,20,bullet.image.getWidth()-25,bullet.image.getHeight()-25))
-			 || asteroid4.getCollisionBox(asteroid4.image,10,10,asteroid4.image.getWidth()-20,asteroid4.image.getHeight()-20).intersects(bullets.get(i).getCollisionBox(bullet.image,20,20,bullet.image.getWidth()-25,bullet.image.getHeight()-25))
-			 || asteroid5.getCollisionBox(asteroid5.image,10,10,asteroid5.image.getWidth()-20,asteroid5.image.getHeight()-20).intersects(bullets.get(i).getCollisionBox(bullet.image,20,20,bullet.image.getWidth()-25,bullet.image.getHeight()-25)))
-				{
-					System.out.println("Bullet hit an asteroid");
-					//System.out.println("bang!");
-				}
 			
-			System.out.println(bullets.get(i));
+			if(bullets.get(i).getCollisionBox(asteroid1))
+			{
+				System.out.println("Bullet hit an asteroid");
+				asteroid1.active = false;
+			}
+		
+			else if(bullets.get(i).getCollisionBox(asteroid2))
+			{
+				System.out.println("Bullet hit an asteroid");
+				asteroid2.active = false;
+			}
 			
-		}*/
+			else if(bullets.get(i).getCollisionBox(asteroid3))
+			{
+				System.out.println("Bullet hit an asteroid");
+				asteroid3.active = false;
+			}
+			
+			else if(bullets.get(i).getCollisionBox(asteroid4))
+			{
+				System.out.println("Bullet hit an asteroid");
+				asteroid4.active = false;
+			}
+			
+			else if(bullets.get(i).getCollisionBox(asteroid5))
+			{
+				System.out.println("Bullet hit an asteroid");
+				asteroid5.active = false;
+			}
+		}
 		
 		
 		// Collision detection between ship and asteroids
-		if (asteroid1.getCollisionBox(asteroid1.image,10,10,asteroid1.image.getWidth()-20,asteroid1.image.getHeight()-20).intersects(ship.getCollisionBox(ship.image,20,20,ship.image.getWidth()-25,ship.image.getHeight()-25)))
-		{		
-			System.out.println("Ship hit asteroid #1");
+		
+		if(ship.getCollisionBox(asteroid1))
+		{
+			System.out.println("Bullet hit an asteroid");
 			asteroid1.active = false;
 		}
-		
-		else if(asteroid2.getCollisionBox(asteroid2.image,10,10,asteroid2.image.getWidth()-20,asteroid2.image.getHeight()-20).intersects(ship.getCollisionBox(ship.image,20,20,ship.image.getWidth()-25,ship.image.getHeight()-25)))
+	
+		else if(ship.getCollisionBox(asteroid2))
 		{
-			System.out.println("Ship hit asteroid #2");
+			System.out.println("Bullet hit an asteroid");
 			asteroid2.active = false;
 		}
 		
-		else if(asteroid3.getCollisionBox(asteroid3.image,10,10,asteroid3.image.getWidth()-20,asteroid3.image.getHeight()-20).intersects(ship.getCollisionBox(ship.image,20,20,ship.image.getWidth()-25,ship.image.getHeight()-25)))
+		else if(ship.getCollisionBox(asteroid3))
 		{
-			System.out.println("Ship hit asteroid #3");
+			System.out.println("Bullet hit an asteroid");
 			asteroid3.active = false;
 		}
 		
-		else if( asteroid4.getCollisionBox(asteroid4.image,10,10,asteroid4.image.getWidth()-20,asteroid4.image.getHeight()-20).intersects(ship.getCollisionBox(ship.image,20,20,ship.image.getWidth()-25,ship.image.getHeight()-25)))
+		else if(ship.getCollisionBox(asteroid4))
 		{
-			System.out.println("Ship hit asteroid #4");
+			System.out.println("Bullet hit an asteroid");
 			asteroid4.active = false;
 		}
 		
-		else if(asteroid5.getCollisionBox(asteroid5.image,10,10,asteroid5.image.getWidth()-20,asteroid5.image.getHeight()-20).intersects(ship.getCollisionBox(ship.image,20,20,ship.image.getWidth()-25,ship.image.getHeight()-25)))
+		else if(ship.getCollisionBox(asteroid5))
 		{
-			System.out.println("Ship hit asteroid #5");
+			System.out.println("Bullet hit an asteroid");
 			asteroid5.active = false;
 		}
 		
-		// Draw rectangles on objects for debugging
-		/*g.drawRect(asteroid1.pos.x+10,asteroid1.pos.y+10,asteroid1.image.getWidth()-20,asteroid1.image.getHeight()-20);
-		g.drawRect(asteroid2.pos.x+10,asteroid2.pos.y+10,asteroid2.image.getWidth()-20,asteroid2.image.getHeight()-20);
-		g.drawRect(asteroid3.pos.x+10,asteroid3.pos.y+10,asteroid3.image.getWidth()-20,asteroid3.image.getHeight()-20);
-		g.drawRect(asteroid4.pos.x+10,asteroid4.pos.y+10,asteroid4.image.getWidth()-20,asteroid4.image.getHeight()-20);
-		g.drawRect(asteroid5.pos.x+10,asteroid5.pos.y+10,asteroid5.image.getWidth()-20,asteroid5.image.getHeight()-20);
-		g.drawRect(ship.pos.x+5,ship.pos.y+5,ship.image.getWidth()-25,ship.image.getHeight()-25);*/	
 	}
 	
 	@Override

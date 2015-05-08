@@ -83,35 +83,19 @@ public class Ship extends Entity {
 		image.draw(pos.x, pos.y);
 	}
 	
-	Rectangle getCollisionBox(Image sprite, int offsetX, int offsetY, int offsetWidth, int offsetHeight)
-	{
-		return new Rectangle((int)pos.x + offsetX, (int)pos.y + offsetY, sprite.getWidth() + offsetWidth, sprite.getHeight() + offsetHeight);
-	}
-
-	/*public float getX() {
-		return pos.x;
-	}
-	
-	public float getY() {
-		return pos.y;
-	}
-	
-	public float getXVel() {
-		return vel.x;
-	}
-	
-	public float getYVel() {
-		return vel.y;
-	}
-	
-	public float getRotation() {
-		
-		return rotation;
-	}*/
-
 	/*Rectangle getCollisionBox(Image sprite, int offsetX, int offsetY, int offsetWidth, int offsetHeight)
 	{
 		return new Rectangle((int)pos.x + offsetX, (int)pos.y + offsetY, sprite.getWidth() + offsetWidth, sprite.getHeight() + offsetHeight);
-		
 	}*/
+	
+	boolean getCollisionBox(Asteroid other)
+	{
+		return (this.pos.x - this.image.getWidth()/2 < other.pos.x + other.image.getWidth()/2) &&
+                (other.pos.x - other.image.getWidth()/2 < this.pos.x + this.image.getWidth()/2) &&
+                (this.pos.y - this.image.getHeight()/2< other.pos.y + other.image.getHeight()/2) &&
+                (other.pos.y - other.image.getHeight()/2 < this.pos.y + this.image.getHeight()/2);
+		
+	}
+
+
 }
